@@ -1,0 +1,1 @@
+{"version":3,"file":"index.css","mappings":";;;AAAA;EACE;AACF,C","sources":["webpack://js/./src/editor.scss"],"sourcesContent":["body {\n  padding: 10px solid red;\n}"],"names":[],"sourceRoot":""}

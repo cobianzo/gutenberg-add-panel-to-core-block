@@ -1,0 +1,35 @@
+{
+	"name": "js",
+	"version": "1.0.0",
+	"description": "js bundling for the plugin",
+	"main": "./build/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"format": "wp-scripts format && stylelint \"**/*.scss\" --fix",
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+	},
+  "prettier": "@wordpress/prettier-config",
+  "stylelint": {
+      "extends": "@wordpress/stylelint-config/scss"
+  },
+  "lint-staged": {
+    "*.js": [
+      "wp-scripts lint-js",
+      "wp-scripts format"
+    ],
+    "*.scss": "npx stylelint --fix"
+  },
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@wordpress/eslint-plugin": "^12.9.0",
+		"@wordpress/prettier-config": "^1.4.0",
+		"@wordpress/scripts": "^23.7.1",
+		"@wordpress/stylelint-config": "^20.0.2",
+		"eslint-config-prettier": "^8.5.0",
+		"husky": "^8.0.1",
+		"lint-staged": "^13.0.3",
+		"stylelint": "^14.10.0"
+	}
+}
