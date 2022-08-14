@@ -27,19 +27,44 @@ class Cob_Add_Panels_To_Gutenberg {
 
 
 	public function __construct() {
-		wp_die();
+
+		// Enqueue hooks
+		add_action( 'init', array( $this, 'cob_init' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'cob_block_editor_assets' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'cob_frontend_assets' ) );
 	}
 
+	public function cob_init() {
+		$asset_file = include plugin_dir_path( __FILE__ ) . 'js/build/index.asset.php';
+		wp_register_style( 'cob-block-style-front-and-backend', plugin_dir_url( __FILE__ ) . 'js/build/index.css', null, $asset_file['version'] );
+	}
 	public function cob_block_editor_assets() {
 
-		$asset_file = include plugin_dir_path( __FILE__ ) . 'build/index.asset.php';
+		// The JS that will add the functionality.
+		$asset_file = include plugin_dir_path( __FILE__ ) . 'js/build/index.asset.php';
 		wp_enqueue_script(
-			'blocks-course-plugin-boilerplate-script',
-			plugins_url( 'build/index.js', __FILE__ ),
+			'cob-boilerplate-script',
+			plugins_url( 'js/build/index.js', __FILE__ ),
 			$asset_file['dependencies'],
-			$asset_file['version']
+			$asset_file['version'],
+			true
 		);
+
+		// Style CSS backend only:
+		wp_enqueue_style( 'cob-block-style-front-and-backend' );
+		// Maybe this is a better solution? Read docs!
+		// register_block_style(
+		// 	'core/cover',
+		// 	array(
+		// 		'name'  => 'my-cover',
+		// 		'label' => __( 'My custom cover', 'mydomain' ),
+		// 	)
+		// );
+	}
+
+	public function cob_frontend_assets() {
+		// Style CSS frontend only:
+		wp_enqueue_style( 'cob-block-style-front-and-backend' );
 	}
 
 }
